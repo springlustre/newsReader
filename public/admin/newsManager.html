@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>后台管理</title>
+
+		<!-- basic styles -->
+		<link href="../stylesheets/admin/bootstrap.min.css" rel="stylesheet" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../stylesheets/admin/ace.min.css" />
+		<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="userList.html" class="navbar-brand">
+						<small>
+							<i class="icon-leaf"></i>
+							Admin
+							首页
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+
+			<div class="main-container-inner">
+
+				<div class="main-content" style="margin-left:10px">
+
+					<div class="page-content">
+								<div class="row">
+									<div class="col-xs-12">
+										<h3 class="header smaller lighter blue">新闻管理</h3>
+										<div class="table-header">
+
+										</div>
+
+										<div class="table-responsive">
+											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th>序号</th>
+														<th>新闻id</th>
+														<th>时间</th>
+														<th class="hidden-480">标题</th>
+														<th class="hidden-480">操作</th>
+													</tr>
+												</thead>
+												<tbody id="userTable">
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+
+
+					</div><!-- /.page-content -->
+
+        </div>
+
+		<div style="width: 80%; height:50px; margin-left:10%; margin-bottom:50px;">
+			<span>
+				<button onclick="getData(1)">首页</button>
+			</span>
+			<span>
+				<button onclick="lastPage()">尾页</button>
+			</span>
+			<span>
+				<button onclick="jumpNextPage(-2)" >上一页</button>
+			</span>
+			<span>
+				<button onclick="jumpNextPage(0)" >下一页</button>
+			</span>
+			<span>
+				 跳转到第 <input id="jumpNum" type="text" style="width: 30px" /> 页
+				<button onclick="jump()">确定</button>
+			</span>
+			<span id="pageSplit">
+
+			</span>
+			<span id="pageCnt">
+				共 页
+			</span>
+			<span id="curPage">
+			</span>
+		</div>
+
+		<!-- basic scripts -->
+
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../javascript/admin/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+        <script type="text/javascript">
+ window.jQuery || document.write("<script src='../javascript/admin/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+
+		<!-- page specific plugin scripts -->
+		<script src="../javascript/admin/util.js"></script>
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+
+			var userId=parseInt(GetQueryString("userId"));
+			var cateId=1;
+			var pageCnt=0;
+			var nextPage=1;//记录下一页 每次页面渲染之后之后 +1
+
+			firstGetData();
+
+	/**我的操作*/
+	function firstGetData(){
+		$.ajax({
+			type: "GET",
+			url: "/prometheus/news/listByCat?cateId="+cateId+"&page="+nextPage,
+			dataType: 'JSON',
+			beforeSend: function(XMLHttpRequest){
+			},
+			success: function(data, textStatus){
+				var errCode=data["errCode"];
+				var cur=data["curPage"];
+				pageCnt = data["pageCnt"];
+				nextPage+=1;
+				if(errCode==0){
+					refreshNewsList(data["data"],cur);
+					updatePageSplit();
+				}
+			},
+
+			complete: function(XMLHttpRequest, textStatus){
+
+			},
+			error: function(){//请求出错处理
+			}
+		});
+	}
+
+			function getData(page){
+				$.ajax({
+					type: "GET",
+					url: "/prometheus/news/listByCat?cateId="+cateId+"&page="+page,
+					dataType: 'JSON',
+					beforeSend: function(XMLHttpRequest){
+					},
+					success: function(data, textStatus){
+						var errCode=data["errCode"];
+						var cur=data["curPage"];
+						pageCnt = data["pageCnt"];
+						nextPage = page+1;
+						if(errCode==0){
+							refreshNewsList(data["data"],cur);
+							updatePageSplit();
+						}
+					},
+
+					complete: function(XMLHttpRequest, textStatus){
+
+					},
+					error: function(){//请求出错处理
+					}
+				});
+			}
+
+			function refreshNewsList(data){
+				$("#userTable").html("");
+				for(var i=0;i<data.length;i++){
+					var html="";
+					html+='<tr>';
+					html+='<td>'+(20*nextPage-40+i+1)+'</td>';
+					html+='<td> <a href="/prometheus/assets/admin/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"]+'" target="blank">';
+					html+=data[i]["id"]+'</td>';
+					html+='<td class="hidden-480">'+formatDate(data[i]["createTime"])+'</td>';
+					html+='<td> <a href="/prometheus/assets/admin/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"]+'" target="blank">';
+					html+=data[i]["title"]+'</td>';
+					html+='<td>';
+					html+='<button onclick="deleteNews('+data[i]["id"]+')" > 删除</button> ';
+					html+='</td></tr>';
+					$("#userTable").append(html);
+				}
+				$("#pageCnt").html("共"+pageCnt+"页");
+			}
+
+			//更新页码按钮
+			function updatePageSplit(){
+				$("#pageSplit").html("");
+				var html = "";
+				var leftCnt = pageCnt-(nextPage-1);
+				for(var i=0;i< (leftCnt>10 ? 10 : leftCnt);i++){
+					var page = nextPage+i;
+					html+='<span><button onclick="getData('+page+')">';
+					html+= '第'+ page + '页';
+					html+='</button> </span>';
+				}
+				$("#pageSplit").append(html);
+				$("#curPage").html("当前第"+(nextPage-1)+"页");
+			}
+
+			function jumpNextPage(index){
+				var page = nextPage + index;
+				getData(page);
+			}
+
+			function lastPage(){
+				getData(pageCnt);
+			}
+
+			function jump(){
+				var page = parseInt($("#jumpNum").val());
+				getData(page);
+			}
+
+
+			function deleteNews(newsId){
+				$.ajax({
+					type: "GET",
+					url: "/prometheus/news/deleteNews?cateId="+cateId+"&newsId="+newsId,
+					dataType: 'JSON',
+					beforeSend: function(XMLHttpRequest){
+					},
+					success: function(data, textStatus){
+						var errCode=data["errCode"];
+						if(errCode==0){
+							alert("删除成功！");
+							getData((nextPage-1));
+						}else{
+							alert("删除失败！"+data["msg"]);
+						}
+					},
+
+					complete: function(XMLHttpRequest, textStatus){
+
+					},
+					error: function(){//请求出错处理
+					}
+				});
+			}
+
+
+
+		</script>
+	</body>
+</html>

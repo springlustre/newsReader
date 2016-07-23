@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>易览资讯</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../stylesheets/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/css/app.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="../stylesheets/css/idangerous.swiper.css"/>-->
+    <style>
+        .title {
+            margin: 20px 15px 10px;
+            color: #6d6d72;
+            font-size: 15px;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+        }
+        .preloader {
+            position: absolute;
+            left: 0;
+            top: -100px;
+            z-index: 20;
+            line-height: 100px;
+            height: 3em;
+            width: 100%;
+            font-size: 24px;
+            -webkit-transition: 300ms;
+            -moz-transition: 300ms;
+            -ms-transition: 300ms;
+            -o-transition: 300ms;
+            transition: 300ms;
+            background-color: #bbbbbb;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+
+<body>
+<!--侧滑菜单部分-->
+<nav id="cd-lateral-nav" >
+    <div style=" width:90%; height: 13%; margin-left:10%;
+    border-bottom:1px; border-bottom: inset; border-bottom-color: #2a6496">
+        <div style="height:2.5em; width: 100%; margin-top:0.9em;">
+            <div style="height:2.5em; width:2.5em; float: left;">
+               <img class="headImg" style="height:2.2em; width: 2.2em;" src="../images/myPhoto.png" />
+            </div>
+            <div style="height:2.5em; width:3em; float: left; line-height:2.2em">
+                王春泽
+            </div>
+            <div style="height:2.5em; width:1em; float: right; line-height:2.2em">
+                <i class="mui-icon mui-icon-forward"></i>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 90%; height: 30%; margin-left: 10%; margin-top:12%;
+     border-bottom:1px; border-bottom: inset; border-bottom-color: #2a6496">
+        <div style="width:100%; height:30%; line-height:2em;
+         color: #e1edf7">
+            <div style="float: left"><i class="mui-icon mui-icon-email-filled" style="font-size:1.8em"></i>
+            </div>
+            <div style="margin-left:2em">
+                消息
+            </div>
+        </div>
+        <div style="width:100%; height:30%; line-height:2em;
+         color: #e1edf7">
+            <div style="float: left"><i class="mui-icon mui-icon-email-filled" style="font-size:1.8em"></i>
+            </div>
+            <div style="margin-left:2em">
+                消息
+            </div>
+        </div>
+        <div style="width:100%; height:30%;line-height:2em;
+         color: #e1edf7">
+            <div style="float: left"><i class="mui-icon mui-icon-email-filled" style="font-size:1.8em"></i>
+            </div>
+            <div style="margin-left:2em">
+                消息
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 90%; height: 30%; margin-left: 10%; margin-top:1%;
+     ">
+        <div style="width:100%; height:30%; line-height:2em;
+         color: #e1edf7">
+            <div style="float: left"><i class="mui-icon mui-icon-email-filled" style="font-size:1.8em"></i>
+            </div>
+            <div style="margin-left:2em">
+                消息
+            </div>
+        </div>
+    </div>
+
+
+
+</nav>
+
+
+<header class="mui-bar mui-bar-nav" style="position: fixed; z-index: 1001; height:3.5em">
+    <a class="mui-icon  mui-pull-left mui-icon-contact" id="myBtn"></a>
+    <h1 class="mui-title">TITLE</h1>
+    <a class="mui-icon  mui-pull-right mui-icon-search" id="searchBtn"></a>
+</header>
+
+<header class="mui-bar mui-bar-nav" style="height:2.5em; margin-top:3.5em; z-index: 1001">
+    <div class="titleBar" style="width:80%;height:100%;float:left;z-index: 20;" id="titleBar">
+    <div class="swiper-wrapper" style="padding:10px 0 10px; width:100%;z-index: 20; overflow: hidden">
+    <a class="swiper-slide"  href="javascript:void(0);" cate="1" ><span class="news-cate-title">社会</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="2" ><span class="news-cate-title">雷锋网</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3" ><span class="news-cate-title">娱乐</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">科技</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">财经</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">手机</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">互联网</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">时尚</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">军事</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">历史</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">房地产</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title ">八卦</span></a>
+    <a class="swiper-slide" href="javascript:void(0);" cate="3"><span class="news-cate-title">阅读</span></a>
+    </div>
+    </div>
+</header>
+
+<div id="chooseCateBtn" style="position:fixed; right:0; height:2.6em; margin-top:-0.8em; z-index: 1002; width:3em;
+ background-color:#f7f7f7;line-height:3.3em;">
+    <i id="chooseCateIcon" class="mui-icon mui-icon-arrowdown" style="font-size:2em; margin-left:0.2em"></i>
+</div>
+
+<div class="cate-choose-div">
+    <button type="button" class="mui-button mui-btn-danger choose-cate-button"  cate="1">社会</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="2">雷锋网</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="1">社会</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="1">社会</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="1">社会</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="1">社会</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="1">社会</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="1">社会</button>
+    <button type="button" class="mui-button choose-cate-button"  cate="1">社会</button>
+</div>
+
+<div id="backDiv"></div>
+<div class="preloader"> Loading... </div>
+<div class="swiper-container">
+    <div class="mui-table-view swiper-wrapper" id="newsList" style="margin-top: 4.2em;">
+
+    </div>
+</div>
+
+</body>
+
+
+<script src="../javascript/js/mui.min.js"></script>
+<script src="../javascript/js/jquery-2.2.3.min.js"></script>
+<script src="../javascript/js/idangerous.swiper.min.js"></script>
+<script src="../javascript/js/util.js"></script>
+
+<script>
+
+    var $lateral_menu_trigger = $('#myBtn'),
+        $content_wrapper = $('.swiper-container'),
+        $navigation = $('header');
+    $backDiv = $('#backDiv');
+
+    //open-close lateral menu clicking on the menu icon
+    $lateral_menu_trigger.on('click', function(event){
+        event.preventDefault();
+        $navigation.toggleClass('lateral-menu-is-open');
+        $backDiv.toggleClass('lateral-menu-is-open');
+        $content_wrapper.toggleClass('lateral-menu-is-open').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+            // firefox transitions break when parent overflow is changed, so we need to wait for the end of the trasition to give the body an overflow hidden
+            $('body').toggleClass('overflow-hidden');
+        });
+        $('#cd-lateral-nav').toggleClass('lateral-menu-is-open');
+        //check if transitions are not supported - i.e. in IE9
+        if($('html').hasClass('no-csstransitions')) {
+            $('body').toggleClass('overflow-hidden');
+        }
+    });
+
+    function closeSlideMenu(){
+        $navigation.removeClass('lateral-menu-is-open');
+        $backDiv.removeClass('lateral-menu-is-open');
+        $content_wrapper.removeClass('lateral-menu-is-open').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(){
+            $('body').removeClass('overflow-hidden');
+        });
+        $('#cd-lateral-nav').removeClass('lateral-menu-is-open');
+        //check if transitions are not supported
+        if($('html').hasClass('no-csstransitions')) {
+            $('body').removeClass('overflow-hidden');
+        }
+    }
+    //close lateral menu clicking outside the menu itself
+    $content_wrapper.on('click', function(event){
+        if( !$(event.target).is('#myBtn') ) {
+            closeSlideMenu();
+        }
+    });
+
+    $('#searchBtn').on('click',function(event){
+            mui.openWindow({
+                id: "searchPage",
+                url: "searchPage.html",
+                styles: {
+                    popGesture: 'close'
+                },
+                show: {
+                    aniShow: "pop-in"
+                },
+                waiting: {
+                    autoShow: true
+                }
+            });
+    });
+
+    function toggleChooseCateBtn(){
+        $(".cate-choose-div").slideToggle("400");
+        if($("#chooseCateIcon").hasClass("mui-icon-arrowdown")){
+            $("#chooseCateIcon").removeClass("mui-icon-arrowdown");
+            $("#chooseCateIcon").addClass("mui-icon-arrowup");
+        }else{
+            $("#chooseCateIcon").removeClass("mui-icon-arrowup");
+            $("#chooseCateIcon").addClass("mui-icon-arrowdown");
+        }
+    }
+
+    $('#chooseCateBtn').on('click',function(){
+        toggleChooseCateBtn();
+    });
+
+    $('.cate-choose-div').on('click', 'button', function() {
+        var cate=this.getAttribute('cate');
+        $(".mui-btn-danger,.choose-cate-button").removeClass("mui-btn-danger");
+        jQuery(this).addClass("mui-btn-danger");
+        toggleChooseCateBtn();
+    });
+
+</script>
+
+<script>
+    var host="http://localhost:31010/prometheus";
+    var cateId=1;
+    var nextPage=1;//记录下一页 每次页面渲染之后之后 +1
+    var prePage=0;//记录上一页
+    var curPage=1; //当前页 用来存放sessionStory数据
+    var isloading=0;//如果isloading=1 表示正在加载
+    //to flag witch page and witch news has been clicked
+    var newsId=0;
+    var newsPage=1;
+    var index=0; //新闻的序号 1-20
+
+    mui.init({
+        gestureConfig:{
+            tap: true, //默认为true
+            doubletap: true, //默认为false
+            longtap: true, //默认为false
+            swipe: true, //默认为true
+            drag: true, //默认为true
+            hold:false,//默认为false，不监听
+            release:false//默认为false，不监听
+        }
+    });
+
+    var titleBar = new Swiper('#titleBar',{
+//    cssWidthAndHeight : true,
+        mode:'horizontal',
+        visibilityFullFit : true,
+        freeMode : true,
+        watchActiveIndex: true
+    });
+
+
+
+    var mySwiper = new Swiper('.swiper-container',{
+        slidesPerView:'auto',
+        mode:'vertical',
+        watchActiveIndex: true,
+        onTouchStart: function() {
+            holdPosition = 0;
+        },
+        onResistanceBefore: function(s, pos){
+            holdPosition = pos;
+        },
+        onTouchEnd: function(){
+            console.log("---"+holdPosition);
+            if (holdPosition>100) {
+                mySwiper.setWrapperTranslate(0,75,0);
+                mySwiper.params.onlyExternal=true;
+                $('.preloader').addClass('visible');
+                pulldownRefresh(); //实现下拉
+            }
+            if (mySwiper.isEnd) {
+                console.log("-------end");
+            }
+        }
+    });
+
+
+    function loadNewSlides(){
+        setTimeout(function(){
+            //Prepend new slide
+            for(i=0;i<10;i++){
+                var html='';
+                html+='<li class="mui-table-view-cell mui-media" >';
+                html+='      <a href="">';
+                html+='<img class="mui-media-object mui-pull-left thumb-nail" src="">';
+                html+='<div class="mui-media-body">';
+                html+='<div class="news-list-title">标题标题标题标题标题</div>';
+                html+='<div class="news-list-description">';
+                html+='合肥网互粉哦无法复合物ifnmfv发阿三生生死死生生死死生生死死生生死死';
+                html+='</div>';
+                html+='<div class="news-list-info"> <span>22333</span> <span class="comment">1000评论</span>';
+                html+='</div> </div> </a> </li>';
+                mySwiper.prependSlide(html);
+            }
+            //Release interactions and set wrapper
+            mySwiper.setWrapperTranslate(0,-300,0);
+            mySwiper.params.onlyExternal=false;
+            //Update active slide
+            mySwiper.updateActiveSlide(0);
+            //Hide loader
+            $('.preloader').removeClass('visible');
+        },1000)
+    }
+
+
+    /**第一次获取数据 */
+    function firstGetData(page){
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/news/listByCat?cateId="+cateId+"&page="+page,
+            dataType: 'JSON',
+            beforeSend: function(XMLHttpRequest){
+            },
+            success: function(data, textStatus){
+                var errCode=data["errCode"];
+                var cur=data["curPage"];
+                if(errCode==0){
+                    if(newsId>0)
+                        refreshNewsList(data["data"],cur,1);
+                    else
+                        refreshNewsList(data["data"],cur,0);
+                    nextPage+=1;
+                }
+
+                if (window.sessionStorage) {
+                    sessionStorage.setItem("curPage", 1);
+                }
+            },
+
+            complete: function(XMLHttpRequest, textStatus){
+
+            },
+            error: function(){//请求出错处理
+            }
+        });
+    }
+
+
+    /**
+     * 下拉刷新具体业务实现
+     */
+    function pulldownRefresh() {
+        if(newsPage==1 || prePage==0) { // newsPage=1 means first come in and has not read news set the next page=2
+            setTimeout(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/prometheus/news/listByCat?cateId="+cateId+"&page=1",
+                    dataType: 'JSON',
+                    beforeSend: function (XMLHttpRequest) {
+                    },
+                    success: function (data, textStatus) {
+                        var errCode = data["errCode"];
+                        var cur=data["curPage"];
+                        if (errCode == 0) {
+                            refreshNewsList(data["data"],cur,0);
+                            isloading=0;
+                            nextPage = 2;
+                        }
+                    },
+
+                    complete: function (XMLHttpRequest, textStatus) {
+
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+            }, 1000);
+        }else{ //加载前一页
+            $.ajax({
+                type: "GET",
+                url: "/prometheus/news/listByCat?cateId="+cateId+"&page="+prePage,
+                dataType: 'JSON',
+                beforeSend: function (XMLHttpRequest) {
+                },
+                success: function (data, textStatus) {
+                    var errCode = data["errCode"];
+                    var cur=data["curPage"];
+                    if (errCode == 0) {
+                        prependNewsList(data["data"],cur);
+                        isloading=0;
+                        prePage=prePage-1;
+                    }
+                },
+
+                complete: function (XMLHttpRequest, textStatus) {
+                },
+                error: function () {//请求出错处理
+                }
+            });
+        }
+    }
+
+    /**
+     * 上拉加载具体业务实现
+     */
+    function pullupRefresh() {
+        setTimeout(function() {
+            $.ajax({
+                type: "GET",
+                url: "/prometheus/news/listByCat?cateId="+cateId+"&page="+nextPage,
+                dataType: 'JSON',
+                beforeSend: function(XMLHttpRequest){
+                },
+                success: function(data, textStatus){
+                    var errCode=data["errCode"];
+                    var cur=data["curPage"];
+                    if(errCode==0){
+                        appendNewsList(data["data"],cur);
+                        console.log("appendNewsList finish---");
+                        isloading=0;
+                        loadingEnd();
+                    }
+                    nextPage+=1;
+                    if (window.sessionStorage) {
+                        sessionStorage.setItem("curPage", nextPage-1);
+                    }
+                },
+
+                complete: function(XMLHttpRequest, textStatus){
+
+                },
+                error: function(){//请求出错处理
+                }
+            });
+        }, 1000);
+    }
+
+
+
+    function appendNewsList(data,newsPage){
+        mySwiper.removeLastSlide(); //移除最后一个slide 即底部loader
+        for(var i=0;i<data.length;i++){
+            var html="";
+            html+='<li class="mui-table-view-cell mui-media" id='+data[i]["id"]+' name='+data[i]["id"]+' >';
+            html+='<a href="/prometheus/assets/customer/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"]+'" page='+newsPage+' index='+i+'>';
+            if(data[i]["thumbnail"].length>10) {
+                html += '<img class="mui-media-object mui-pull-left thumb-nail" src="' + data[i]["thumbnail"] + '">';
+            }
+            html+='<div class="mui-media-body">';
+            html+='<div class="news-list-title">'+data[i]["title"]+'</div>';
+            html+='<div class="news-list-description">';
+            html+=data[i]["description"];
+            html+='</div>';
+            html+=' <div class="news-list-info">';
+            html+='<span>'+formatDate(data[i]["createTime"])+'</span>';
+            html+='<span class="comment">1000评论</span>';
+            html+='</div></div></a></li>';
+            mySwiper.appendSlide(html);
+        }
+        appendLoader();//重新添加底部loader
+    }
+
+
+
+    function refreshNewsList(data,newsPage,needLocation){
+        mySwiper.removeAllSlides();
+        for(var i=0;i<data.length;i++){
+            var html="";
+            html+='<li class="mui-table-view-cell mui-media" id='+data[i]["id"]+' name='+data[i]["id"]+'>';
+            html+='<a href="/prometheus/assets/customer/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"]+'" page='+newsPage+' index='+i+'>';
+            if(data[i]["thumbnail"].length>10) {
+                html += '<img class="mui-media-object mui-pull-left thumb-nail" src="' + data[i]["thumbnail"] + '">';
+            }
+            html+='<div class="mui-media-body">';
+            html+='<div class="news-list-title">'+data[i]["title"]+'</div>';
+            html+='<div class="news-list-description">';
+            html+=data[i]["description"];
+            html+='</div>';
+            html+=' <div class="news-list-info">';
+            html+='<span>'+formatDate(data[i]["createTime"])+'</span>';
+            html+='<span class="comment">1000评论</span>';
+            html+='</div></div></a></li>';
+            mySwiper.appendSlide(html);
+        }
+        appendLoader(); //每次刷新列表是加入底部loader
+        if(needLocation==1){
+            var perHeight=$("#newsList li").innerHeight();
+            var pos=index*perHeight;
+            mySwiper.setWrapperTranslate(0,-pos+30,0);
+        }else{
+            console.log("//??????????? curpage="+curPage);
+            mySwiper.setWrapperTranslate(0,30,0);
+        }
+        mySwiper.params.onlyExternal=false;
+        //Update active slide
+        mySwiper.updateActiveSlide(0);
+        //Hide loader
+        $('.preloader').removeClass('visible');
+    }
+
+
+    function prependNewsList(data,newsPage){
+        for(var i=data.length-1;i>=0;i--){
+            var html="";
+            html+='<li class="mui-table-view-cell mui-media" id='+data[i]["id"]+' name='+data[i]["id"]+' >';
+            html+='<a href="/prometheus/assets/customer/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"]+'" page='+newsPage+' index='+i+'>';
+            if(data[i]["thumbnail"].length>10) {
+                html += '<img class="mui-media-object mui-pull-left thumb-nail" src="' + data[i]["thumbnail"] + '">';
+            }
+            html+='<div class="mui-media-body">';
+            html+='<div class="news-list-title">'+data[i]["title"]+'</div>';
+            html+='<div class="news-list-description">';
+            html+=data[i]["description"];
+            html+='</div>';
+            html+=' <div class="news-list-info">';
+            html+='<span>'+formatDate(data[i]["createTime"])+'</span>';
+            html+='<span class="comment">1000评论</span>';
+            html+='</div></div></a></li>';
+            mySwiper.prependSlide(html);
+        }
+        //Release interactions and set wrapper
+        var perHeight=$("#newsList li").innerHeight();
+        mySwiper.setWrapperTranslate(0,-data.length*perHeight+50,10);
+        mySwiper.params.onlyExternal=false;
+        //Update active slide
+        mySwiper.updateActiveSlide(0);
+        //Hide loader
+        $('.preloader').removeClass('visible');
+    }
+
+    function appendLoader(){
+        var html='';
+        html+='<li class="mui-table-view-cell mui-media" id="loader" style="height: 50px">';
+        html+='<a href="loader" id="loader">';
+        html+='点击加载更多……';
+        html+='</a></li>';
+        mySwiper.appendSlide(html);
+    }
+
+    function isLoading(){
+        $("#loader a").html("正在加载");
+    }
+
+    function loadingEnd(){
+        $("#loader a").html("点击加载更多……");
+    }
+
+    //主列表点击事件
+    mui('#newsList').on('tap', 'a', function() {
+        if($("#backDiv").hasClass("lateral-menu-is-open")){
+            closeSlideMenu();
+        }else {
+            var id = this.getAttribute('href');
+            var href = this.href;
+            if (id == "loader" && isloading == 0) {
+                isLoading();
+                pullupRefresh();
+            } else {
+                var index = parseInt(this.getAttribute("index"));
+                var newsPage = parseInt(this.getAttribute("page"));
+                console.log("--------newsPage===" + parseInt(this.getAttribute("page")) + "  " + index);
+                if (window.sessionStorage) {
+                    sessionStorage.setItem("newsPage", newsPage);
+                    sessionStorage.setItem("index", index);
+                }
+                mui.openWindow({
+                    id: id,
+                    url: this.href,
+                    styles: {
+                        popGesture: 'close'
+                    },
+                    show: {
+                        aniShow: "pop-in"
+                    },
+                    waiting: {
+                        autoShow: true
+                    }
+                });
+            }
+        }
+    });
+
+
+    mui('.swiper-wrapper').on('swipeup', 'li', function() {
+        var offset=$("#newsList").offset();
+        var height=$("#newsList").innerHeight();
+        console.log("--------上拉==="+offset.top+"=="+height+"=="+mySwiper.getWrapperTranslate('y'));
+        if(((height+offset.top) < 1000) || (offset.top/height < -0.8)){
+            console.log(height+offset.top+ " === " +offset.top/height);
+            if(isloading==0) {
+                isloading=1;
+                console.log("加载下一页……");
+                pullupRefresh();
+            }
+        }
+    });
+
+
+    /**the onclick event of title bar */
+    mui('#titleBar').on('tap', 'a', function() {
+        var cate=this.getAttribute('cate');
+        if (window.sessionStorage) {
+            sessionStorage.setItem("cateId", parseInt(cate));
+        }
+        if(cate==1){
+            cateId=1;
+            nextPage=1;//记录下一页 每次页面渲染之后之后 +1
+            prePage=0;//记录上一页
+            curPage=1; //当前页 用来存放sessionStory数据
+            newsId=0;
+            newsPage=1;
+            index=0; //新闻的序号 1-20
+            firstGetData(newsPage);
+        }else if(cate==2){
+            cateId=2;
+            nextPage=1;//记录下一页 每次页面渲染之后之后 +1
+            prePage=0;//记录上一页
+            curPage=1; //当前页 用来存放sessionStory数据
+            newsId=0;
+            newsPage=1;
+            index=0; //新闻的序号 1-20
+            firstGetData(newsPage);
+        }else{
+            mySwiper.removeAllSlides();
+        }
+    }
+
+
+    );
+
+
+
+
+    $(document).ready(function(){
+        if (window.sessionStorage) {
+            var a=sessionStorage.getItem("curPage");
+            var b =sessionStorage.getItem("newsId");
+            var c =sessionStorage.getItem("newsPage");
+            var d=sessionStorage.getItem("index");
+            if(a!=null){
+                curPage = parseInt(a);
+            }
+            if(b!=null){
+                newsId=parseInt(b);
+            }
+            if(c!=null){
+                newsPage=parseInt(c);
+                curPage=newsPage;
+                prePage=newsPage-1;
+                nextPage=newsPage;
+            }
+            if(d!=null){
+                index=parseInt(d);
+            }
+            if(sessionStorage.getItem("cateId")!=null){
+                cateId=parseInt(sessionStorage.getItem("cateId"));
+            }
+        }
+
+        console.log("=====curPage:" + curPage+"newsId="+newsId+"newsPage"+newsPage+a+" ++ "+b+c);
+        firstGetData(newsPage);
+
+    });
+
+
+
+
+</script>
+
+</html>
+
+

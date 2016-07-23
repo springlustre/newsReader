@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../stylesheets/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/css/app.css" />
+    <style>
+        .mui-input-group {
+            margin-top: 10px;
+        }
+
+        .mui-input-group:first-child {
+            margin-top: 20px;
+        }
+
+        .mui-input-group label {
+            width: 22%;
+        }
+
+        .mui-input-row label~input,
+        .mui-input-row label~select,
+        .mui-input-row label~textarea {
+            width: 78%;
+        }
+
+        .mui-content-padded {
+            margin-top: 25px;
+        }
+
+        .mui-btn {
+            padding: 10px;
+        }
+
+        .link-area {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .spliter {
+            color: #bbb;
+            padding: 0px 8px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">登录</h1>
+</header>
+
+<div class="mui-content">
+    <form id='login-form' class="mui-input-group">
+        <div class="mui-input-row">
+            <label>账号</label>
+            <input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+        </div>
+        <div class="mui-input-row">
+            <label>密码</label>
+            <input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+        </div>
+    </form>
+
+    <div class="mui-content-padded">
+        <button id='login' class="mui-btn mui-btn-block mui-btn-primary">登 录</button>
+        <div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="../javascript/js/mui.min.js"></script>
+<script src="../javascript/js/jquery-2.2.3.min.js"></script>
+<script src="../javascript/js/util.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    function checkNull(){
+        if($.trim($("#account").val()).length==0 || $.trim($("#password").val()).length==0){
+            mui.toast("账号或密码不能为空");
+            return 0;
+        }
+        else{
+            return 1;
+        }
+    }
+
+    function login(){
+        if(checkNull()==1){
+            var username= $.trim($("#account").val());
+            var password = $.trim($("#password").val());
+            $.ajax({
+                type: "POST",
+                url: "/prometheus/user/login",
+                contentType: "application/json", //必须有
+                dataType: 'JSON',
+                data: JSON.stringify({
+                    'login': username,
+                    'password': password
+                }),
+                beforeSend: function (XMLHttpRequest) {
+                },
+                success: function (data, textStatus) {
+                    var errCode = data["errCode"];
+                    if (errCode == 0) {
+                        mui.toast("登录成功！");
+                    } else if(errCode==1000201) {
+                        mui.toast("账号不存在！");
+                    } else if(errCode==1000202){
+                        mui.toast("密码错误！");
+                    } else{
+                        mui.toast("登录失败！稍后重试");
+                    }
+                }
+            });
+        }
+    }
+
+
+    $(document).ready(function(){
+        document.getElementById("login").addEventListener("tap",function(){
+                    login();
+                }
+        );
+
+        document.getElementById("reg").addEventListener("tap",function(){
+            mui.openWindow({
+                id: "register",
+                url: "register.html",
+                styles: {
+                    popGesture: 'close'
+                },
+                show: {
+                    aniShow: "pop-in"
+                },
+                waiting: {
+                    autoShow: true
+                }
+            });
+        });
+
+        document.getElementById("forgetPassword").addEventListener("tap",function(){
+            mui.openWindow({
+                id: "findPassword",
+                url: "findPassword.html",
+                styles: {
+                    popGesture: 'close'
+                },
+                show: {
+                    aniShow: "pop-in"
+                },
+                waiting: {
+                    autoShow: true
+                }
+            });
+        });
+
+
+    });
+
+
+
+</script>
+</body>
+
+</html>

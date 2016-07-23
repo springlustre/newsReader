@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../stylesheets/css/mui.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/css/app.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/css/app.css")">-->
+
+    <style>
+        .title {
+            margin: 20px 15px 10px;
+            color: #6d6d72;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="mui-bar mui-bar-nav" style="padding: 0;">
+    <!--<a class="mui-icon  mui-pull-left">logo</a>-->
+    <!--<h1 class="mui-title">春哥日报</h1>-->
+    <a class="mui-icon  mui-pull-right mui-icon-search" href="#20">qq</a>
+
+    <div style="width:100%;" style="z-index:1001;padding: 0;">
+        <ul class="mui-table-view" style="margin: 0;">
+            <li class="mui-table-view-cell mui-collapse">
+                <a class="mui-navigate-right" href="#">
+                    <span class="news-list-cate">社会</span>
+                    <span class="news-list-cate">娱乐</span>
+                    <span class="news-list-cate">科技</span>
+                    <span class="news-list-cate" >读书</span>
+                    <!--<a class="mui-navigate-right" href="#">-->
+                    <!--<span class="news-list-cate">财经</span>-->
+                </a>
+                <div class="mui-collapse-content">
+                    <span class="news-list-cate-label">社会</span>
+                    <span class="news-list-cate-label">娱乐</span>
+                    <span class="news-list-cate-label">科技</span>
+                    <span class="news-list-cate-label">读书</span>
+                    <span class="news-list-cate-label">财经</span>
+                    <span class="news-list-cate-label">社会</span>
+                    <span class="news-list-cate-label">娱乐</span>
+                    <span class="news-list-cate-label">科技</span>
+                    <span class="news-list-cate-label">读书</span>
+                    <span class="news-list-cate-label">财经</span>
+                    <span class="news-list-cate-label">社会</span>
+                    <span class="news-list-cate-label">娱乐</span>
+                    <span class="news-list-cate-label">科技</span>
+                    <span class="news-list-cate-label">读书</span>
+                    <span class="news-list-cate-label">财经</span>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</header>
+<!--<a href="" id="location"> </a>-->
+<div id="pullrefresh" class="mui-content">
+    <div class="mui-content">
+        <ul class="mui-table-view" id="newsList">
+            <li class="mui-table-view-cell mui-media" id='ww' name='+data[i]["id"]+'>
+            <a href="/prometheus/assets/customer/newsDetail.html?">
+            <img class="mui-media-object mui-pull-left thumb-nail" src="">
+           <div class="mui-media-body">
+              <div class="news-list-title">'+data[i]["title"]+'</div>
+             <div class="news-list-description">
+
+                   </div>';
+                <div class="news-list-info">
+                   <span>'+formatDate(data[i]["createTime"])+'</span>
+                   <span class="comment">1000评论</span>
+                 </div></div></a></li>
+
+        </ul>
+
+
+    </div>
+</div>
+
+</body>
+
+<script src="../javascript/js/jquery-2.2.3.min.js"></script>
+<script src="../javascript/js/mui.min.js"></script>
+<script src="../javascript/js/util.js"></script>
+<script>
+var host="http://localhost:31010/prometheus";
+var nextPage=1;//记录下一页 每次页面渲染之后之后 +1
+var prePage=0;//记录上一页
+var curPage=1; //当前页 用来存放sessionStory数据
+
+//to flag witch page and witch news has been clicked
+var newsId=0;
+var newsPage=1;
+mui.init({
+//    pullRefresh: {
+//        container: '#pullrefresh',
+////        down: {
+////            callback: pulldownRefresh
+////        },
+//        up: {
+//            contentrefresh: '正在加载...',
+//            contentnomore:'没有更多数据了',
+//            callback: pullupRefresh
+//        }
+//    },
+    gestureConfig:{
+        tap: true, //默认为true
+        doubletap: true, //默认为false
+        longtap: true, //默认为false
+        swipe: true, //默认为true
+        drag: true, //默认为true
+        hold:false,//默认为false，不监听
+        release:false//默认为false，不监听
+    }
+});
+//mui('#pullrefresh').pullRefresh();
+window.addEventListener('dragstart', function(e) {
+    mui.gestures.touch.lockDirection = true; //锁定方向
+    mui.gestures.touch.startDirection = e.detail.direction;
+});
+window.addEventListener('dragright', function(e) {
+    if (!mui.isScrolling) {
+        e.detail.gesture.preventDefault();
+    }
+});
+
+/**第一次获取数据 */
+function firstGetData(page){
+    $.ajax({
+        type: "GET",
+        url: "/prometheus/news/listByCat?cateId=0&page="+page,
+        dataType: 'JSON',
+        beforeSend: function(XMLHttpRequest){
+        },
+        success: function(data, textStatus){
+            var errCode=data["errCode"];
+            var cur=data["curPage"];
+            if(errCode==0){
+                if(newsId>0)
+                    refreshNewsList(data["data"],cur,1);
+                else
+                    refreshNewsList(data["data"],cur,0);
+                nextPage+=1;
+            }
+
+            if (window.sessionStorage) {
+                sessionStorage.setItem("curPage", 1);
+            }
+        },
+
+        complete: function(XMLHttpRequest, textStatus){
+
+        },
+        error: function(){//请求出错处理
+        }
+    });
+}
+
+
+/**
+ * 下拉刷新具体业务实现
+ */
+function pulldownRefresh() {
+    if(newsPage==1) { // newsPage=1 means first come in and has not read news set the next page=2
+        setTimeout(function () {
+            $.ajax({
+                type: "GET",
+                url: "/prometheus/news/listByCat?cateId=0&page=1",
+                dataType: 'JSON',
+                beforeSend: function (XMLHttpRequest) {
+                },
+                success: function (data, textStatus) {
+                    var errCode = data["errCode"];
+                    var cur=data["curPage"];
+                    if (errCode == 0) {
+                        refreshNewsList(data["data"],cur,0);
+                        nextPage = 2;
+                    }
+                },
+
+                complete: function (XMLHttpRequest, textStatus) {
+
+                },
+                error: function () {//请求出错处理
+                }
+            });
+
+            mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+        }, 1500);
+    }else{
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/news/listByCat?cateId=0&page="+prePage,
+            dataType: 'JSON',
+            beforeSend: function (XMLHttpRequest) {
+            },
+            success: function (data, textStatus) {
+                var errCode = data["errCode"];
+                var cur=data["curPage"];
+                if (errCode == 0) {
+                    var elId=$("#newsList > li").get(0).getAttribute("id");//.firstChild;
+                    console.log(";;;;"+elId);
+                    prependNewsList(data["data"],cur,elId);
+                }
+                mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+            },
+
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            error: function () {//请求出错处理
+            }
+        });
+        console.log("======++++++++++++++")
+    }
+}
+
+/**
+ * 上拉加载具体业务实现
+ */
+function pullupRefresh() {
+    setTimeout(function() {
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/news/listByCat?cateId=0&page="+nextPage,
+            dataType: 'JSON',
+            beforeSend: function(XMLHttpRequest){
+            },
+            success: function(data, textStatus){
+                var errCode=data["errCode"];
+                var cur=data["curPage"];
+                if(errCode==0){
+                    appendNewsList(data["data"],cur);
+                }
+                nextPage+=1;
+                if (window.sessionStorage) {
+                    sessionStorage.setItem("curPage", nextPage-1);
+                }
+            },
+
+            complete: function(XMLHttpRequest, textStatus){
+
+            },
+            error: function(){//请求出错处理
+            }
+        });
+        mui('#pullrefresh').pullRefresh().endPullupToRefresh(); //refresh completed
+    }, 1500);
+}
+
+
+
+function appendNewsList(data,newsPage){
+    for(var i=0;i<data.length;i++){
+        var html="";
+        html+='<li class="mui-table-view-cell mui-media" id='+data[i]["id"]+' name='+data[i]["id"]+'>';
+        html+='<a href="/prometheus/assets/customer/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"]+'" page='+newsPage+'>';
+        html+='<img class="mui-media-object mui-pull-left thumb-nail" src="'+data[i]["thumbnail"]+'">';
+        html+='<div class="mui-media-body">';
+        html+='<div class="news-list-title">'+data[i]["title"]+'</div>';
+        html+='<div class="news-list-description">';
+        html+=data[i]["description"];
+        html+='</div>';
+        html+=' <div class="news-list-info">';
+        html+='<span>'+formatDate(data[i]["createTime"])+'</span>';
+        html+='<span class="comment">1000评论</span>';
+        html+='</div></div></a></li>';
+        $("#newsList").append(html);
+    }
+}
+
+
+
+function refreshNewsList(data,newsPage,needLocation){
+    $("#newsList").html("");
+    for(var i=0;i<data.length;i++){
+        var html="";
+        html+='<li class="mui-table-view-cell mui-media" id='+data[i]["id"]+' name='+data[i]["id"]+'>';
+        html+='<a href="/prometheus/assets/customer/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"]+'" page='+newsPage+'>';
+        html+='<img class="mui-media-object mui-pull-left thumb-nail" src="'+data[i]["thumbnail"]+'">';
+        html+='<div class="mui-media-body">';
+        html+='<div class="news-list-title">'+data[i]["title"]+'</div>';
+        html+='<div class="news-list-description">';
+        html+=data[i]["description"];
+        html+='</div>';
+        html+=' <div class="news-list-info">';
+        html+='<span>'+formatDate(data[i]["createTime"])+'</span>';
+        html+='<span class="comment">1000评论</span>';
+        html+='</div></div></a></li>';
+        $("#newsList").append(html);
+    }
+    if(needLocation==1){
+//        location.href="#"+newsId;
+//        $('#pullrefresh').scrollTop(5000);
+
+    }
+}
+
+
+function prependNewsList(data,newsPage,el){
+    for(var i=0;i<40;i++){
+        var html="";
+        html+='<li id='+i+' >'+i+'44444444444444444</li>';
+        $(html).prependTo("#newsList");
+    }
+
+//    scrollOffset($("#"+el).offset());
+//    console.log($("#"+el).offset());
+//    location.href = "#390";
+//    location.href = "#397";
+}
+
+
+// jQuery 定位让body的scrollTop等于pos的top，就实现了滚动
+function scrollOffset(scroll_offset) {
+    $("body,html").animate({
+        scrollTop: scroll_offset.top - 70
+    }, 0);
+}
+//主列表点击事件
+mui('#newsList').on('tap', 'a', function() {
+    console.log("--------newsPage==="+ parseInt(this.getAttribute("page")));
+    prependNewsList(3,2,2);
+//    if (window.sessionStorage) {
+//        sessionStorage.setItem("newsPage", newsPage);
+//    }
+////    location.href = "#397";
+//    mui.openWindow({
+//        id: id,
+//        url: this.href,
+//        styles: {
+//            popGesture: 'close'
+//        },
+//        show: {
+//            aniShow: "pop-in"
+//        },
+//        waiting: {
+//            autoShow: true
+//        }
+//    });
+
+
+});
+
+mui('#newsList').on('swipedown', 'li', function() {
+    var offset=$("#newsList").offset();
+    console.log("--------llllll==="+offset.top);
+    if(offset.top<500){
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/news/listByCat?cateId=0&page="+prePage,
+            dataType: 'JSON',
+            beforeSend: function (XMLHttpRequest) {
+            },
+            success: function (data, textStatus) {
+                var errCode = data["errCode"];
+                var cur=data["curPage"];
+                if (errCode == 0) {
+                    var elId=$("#newsList > li").get(0).getAttribute("id");
+                    prependNewsList(data["data"],cur,elId);
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+            },
+            error: function () {//请求出错处理
+            }
+        });
+    }
+//    location.href = "#397";
+});
+
+
+
+$(document).ready(function(){
+    if (window.sessionStorage) {
+        var a=sessionStorage.getItem("curPage");
+        var b =sessionStorage.getItem("newsId");
+        var c =sessionStorage.getItem("newsPage");
+        if(a!=null){
+            curPage = parseInt(a);
+        }
+        if(b!=null){
+            newsId=parseInt(b);
+        }
+        if(c!=null){
+            newsPage=parseInt(c);
+            curPage=newsPage;
+            prePage=newsPage-1;
+            nextPage=newsPage;
+        }
+    }
+
+    console.log("=====curPage:" + curPage+"newsId="+newsId+"newsPage"+newsPage+a+" ++ "+b);
+    firstGetData(newsPage);
+
+});
+
+
+</script>
+
+</html>
+
+

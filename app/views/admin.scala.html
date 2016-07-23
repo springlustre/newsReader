@@ -1,0 +1,29 @@
+@*
+* This template takes a single argument, a String containing a
+* message to display.
+*@
+@(message: String)
+
+@*
+* Call the the `main` template with two arguments. The first
+* argument is a `String` with the title of the page, the second
+* argument is an `Html` object containing the body of the page.
+*@
+@main(message) {
+
+  @*
+  * Get an `Html` object by calling the built-in Play welcome
+  * template and passing a `String` message.
+  *@
+  <div id="root">
+  </div>
+  @*<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/customer/index.css")">
+  <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/customer/storeIndex.css")">
+  *@
+
+  <script>
+    window.location.href="/prometheus/assets/admin/newsManager.html";
+  </script>
+
+
+}

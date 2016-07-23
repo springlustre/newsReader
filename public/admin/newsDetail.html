@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>新闻详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../stylesheets/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/css/app.css"/>
+    <style>
+    </style>
+</head>
+
+<body>
+<div id="newsDetail" class="mui-content">
+<div class="mui-scroll news-detail">
+    <div class="news-detail-title">
+        <div class="title" id="newsTitle">
+
+        </div>
+        <div class="info">
+            <span class="info-source" id="newsSource">
+
+            </span>
+            <span class="info-time" id="newsTime">
+
+            </span>
+        </div>
+    </div>
+
+    <div class="news-detail-content" id="newsContent">
+
+    </div>
+
+
+
+    <div style="height: 30px;">
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+</body>
+
+
+<script src="../javascript/js/jquery-2.2.3.min.js"></script>
+<script src="../javascript/js/util.js"></script>
+<script>
+    var host="http://localhost:31010/prometheus";
+
+    var cateId=GetQueryString("cateId");
+    var newsId=GetQueryString("newsId");
+
+    getNewsDetail(cateId,newsId);
+
+
+    //获取新闻详情
+    function getNewsDetail(cateId,newsId){
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/news/getInfo?cateId="+cateId+"&id="+newsId,
+            dataType: 'JSON',
+            beforeSend: function(XMLHttpRequest){
+            },
+            success: function(data, textStatus){
+                var errCode=data["errCode"];
+                if(errCode==0){
+                    handleData(data["data"]);
+                }else{
+
+                }
+            },
+            complete: function(XMLHttpRequest, textStatus){
+
+            },
+            error: function(){//请求出错处理
+            }
+        });
+    }
+
+
+
+
+    function handleData(data){
+        $("#newsTitle").html(data["title"]);
+        $("title").html(data["title"]);
+        $("#newsSource").html(data["source"]);
+        $("#newsTime").html(formatDate(data["createTime"]));
+        var html="";
+        if(data["thumbnail"].length>1){
+            html+='<div class="news-detail-picture">';
+            html+='<img src="'+data["thumbnail"]+'"/></div>';
+        }
+        html+=data["content"];
+        $("#newsContent").html(html);
+    }
+
+
+
+
+
+
+
+
+
+</script>
+</html>

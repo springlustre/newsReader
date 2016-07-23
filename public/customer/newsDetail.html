@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>春哥日报</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../stylesheets/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/css/app.css"/>
+    <style>
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-icon  mui-pull-left mui-icon-back" id="backBtn"></a>
+    <h1 class="mui-title"></h1>
+    <a class="mui-icon  mui-pull-right mui-icon-more"></a>
+</header>
+
+
+<nav class="mui-bar mui-bar-tab" style="height:30px; min-height:30px;background-color: white">
+    <div style="width: 100%; height:100%;">
+        <div style="float: left; width:15%">
+            <img src="../images/comment.png" style="margin-top:10px; margin-left:10%;">
+        </div>
+        <div style="float: left; width:65%">
+            <input type="text" id="commentContent" style="width: 100%; height: 25px; border:none; margin:0; margin-bottom: 5px;margin-top:13px;border-bottom: inset"
+                    placeholder="在此写下评论"/>
+        </div>
+        <div style="float: left; width:15%">
+            <input id="createComment" type="submit" value="发送" style="border: none;background-color: white;color: #333333;margin-top:10px;" />
+        </div>
+    </div>
+</nav>
+
+
+<div id="newsDetail" class="mui-content">
+<div class="mui-scroll news-detail">
+    <div class="news-detail-title">
+        <div class="title" id="newsTitle">
+
+        </div>
+        <div class="info">
+            <span class="info-source" id="newsSource">
+
+            </span>
+            <span class="info-time" id="newsTime">
+
+            </span>
+        </div>
+    </div>
+
+    <div class="news-detail-content" id="newsContent">
+
+    </div>
+
+    <div class="mui-card reco-board" style="margin-bottom: 35px;">
+        <div style="width: 100%; height: 26px; border-bottom: inherit">
+            <p style="font-size:1.5em; margin-top:6px; margin-left:13px;color: #dd524d">热门评论</p>
+        </div>
+        <ul class="mui-table-view" id="commentBoard">
+            <!--<li class="mui-table-view-cell mui-media">-->
+                <!--<a href="#">-->
+                    <!--<img class="mui-media-object mui-pull-left comment-user-pic" src="http://img1.cache.netease.com/catchpic/7/74/74A6C64C4463BDAE34A58AEF161903BF.jpg" />-->
+                    <!--<div class="mui-media-body">-->
+                        <!--<div class="news-list-title">-->
+                            <!--王春泽-->
+                        <!--</div>-->
+                        <!--<div class="news-list-description">-->
+                            <!--哈哈哈哈哈哈哈哈哈哈哈哈哈-->
+                        <!--</div>-->
+                        <!--<div class="news-list-info">-->
+                            <!--<span>2016-4-25 14:46</span>-->
+                            <!--<span class="comment">99顶</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</li>-->
+
+            <!--<li class="mui-table-view-cell mui-media">-->
+                <!--<a href="#">-->
+                    <!--<img class="mui-media-object mui-pull-left comment-user-pic" src="http://img1.cache.netease.com/catchpic/7/74/74A6C64C4463BDAE34A58AEF161903BF.jpg" />-->
+
+                    <!--<div class="mui-media-body">-->
+                        <!--<div class="news-list-title">-->
+                            <!--王春泽-->
+                        <!--</div>-->
+                        <!--<div class="news-list-description">-->
+                            <!--哈哈哈-->
+                        <!--</div>-->
+                        <!--<div class="news-list-info">-->
+                            <!--<span>2016-4-25 14:46</span>-->
+                            <!--<span class="comment">99顶</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li class="mui-table-view-cell mui-media">-->
+                <!--<a href="#">-->
+                    <!--<div class="comment-more-btn">-->
+                        <!--查看全部评论-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+
+
+    <div class="mui-card reco-board" style="margin-bottom: 35px;">
+        <div style="width: 100%; height: 30px; border-bottom: inherit">
+          <p style="font-size:1.5em; margin-top:10px; margin-left:13px;color: #dd524d">相关推荐</p>
+        </div>
+        <ul class="mui-table-view" id="recoBoard">
+
+            <!--<li class="mui-table-view-cell mui-media" >-->
+                <!--<a href="/prometheus/assets/customer/newsDetail.html?newsId=1087&cateId=0" >-->
+
+                    <!--<img class="mui-media-object mui-pull-left reco-thumb-nail" src="http://img1.cache.netease.com/catchpic/7/74/74A6C64C4463BDAE34A58AEF161903BF.jpg" />-->
+
+                    <!--<div class="mui-media-body">-->
+                        <!--<div class="reco-news-title">-->
+                            <!--广东省原副省长刘志庚涉嫌受贿罪被立案侦查-->
+                        <!--</div>-->
+                        <!--<div class="news-list-info">-->
+                            <!--<span>中国新闻网啊啊</span>-->
+                            <!--<span class="comment">2016-4-25 14:46</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</li>-->
+        </ul>
+    </div>
+
+    <div style="height: 30px;">
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+</body>
+
+
+<script src="../javascript/js/mui.min.js"></script>
+<script src="../javascript/js/jquery-2.2.3.min.js"></script>
+<script src="../javascript/js/util.js"></script>
+<script>
+    var host="http://localhost:31010/prometheus";
+
+    var cateId=GetQueryString("cateId");
+    var newsId=GetQueryString("newsId");
+
+    if (window.sessionStorage) {
+        sessionStorage.setItem("newsId", newsId);
+    }
+
+
+
+    getNewsDetail(cateId,newsId);
+    getComment(cateId,newsId);
+    getRecommentNews(cateId,newsId);
+
+    //获取新闻详情
+    function getNewsDetail(cateId,newsId){
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/news/getInfo?cateId="+cateId+"&id="+newsId,
+            dataType: 'JSON',
+            beforeSend: function(XMLHttpRequest){
+            },
+            success: function(data, textStatus){
+                var errCode=data["errCode"];
+                if(errCode==0){
+                    handleData(data["data"]);
+                }else{
+
+                }
+            },
+            complete: function(XMLHttpRequest, textStatus){
+
+            },
+            error: function(){//请求出错处理
+            }
+        });
+    }
+
+    //获取热门评论
+    function getComment(cateId,newsId){
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/comment/getByNews?cateId="+cateId+"&newsId="+newsId+"&page="+1+"&size="+4,
+            dataType: 'JSON',
+            beforeSend: function(XMLHttpRequest){
+            },
+            success: function(data, textStatus){
+                var errCode=data["errCode"];
+                if(errCode==0){
+                    updateCommentList(data["data"]);
+                }else{
+                }
+            },
+            complete: function(XMLHttpRequest, textStatus){
+
+            },
+            error: function(){//请求出错处理
+            }
+        });
+    }
+
+    //获取推荐新闻
+    function getRecommentNews(cateId,newsId){
+        $.ajax({
+            type: "GET",
+            url: "/prometheus/news/getRecommentNews?cateId="+cateId+"&newsId="+newsId,
+            dataType: 'JSON',
+            beforeSend: function(XMLHttpRequest){
+            },
+            success: function(data, textStatus){
+                var errCode=data["errCode"];
+                if(errCode==0){
+                    updateRecommentList(data["data"]);
+                }else{
+                }
+            },
+            complete: function(XMLHttpRequest, textStatus){
+
+            },
+            error: function(){//请求出错处理
+            }
+        });
+    }
+
+    function handleData(data){
+        $("#newsTitle").html(data["title"]);
+        $("title").html(data["title"]);
+        $("#newsSource").html(data["source"]);
+        $("#newsTime").html(formatDate(data["createTime"]));
+        var html="";
+        if(data["thumbnail"].length>1){
+            html+='<div class="news-detail-picture">';
+            html+='<img src="'+data["thumbnail"]+'"/></div>';
+        }
+        html+=data["content"];
+        $("#newsContent").html(html);
+    }
+
+
+    /**更新热门评论DOM*/
+    function updateCommentList(data){
+        $("#commentBoard").html("");
+        for(var i=0;i<data.length;i++) {
+            var html = "";
+            html += '<li class="mui-table-view-cell mui-media">';
+            html += '<a href="#">';
+            html += '<img class="mui-media-object mui-pull-left comment-user-pic" src="'+data[i]["userPic"]+'" />';
+            html += '<div class="mui-media-body">';
+            html += '<div class="news-list-title">';
+            html += data[i]["userName"];
+            html += '</div>';
+            html += '<div class="news-list-description">';
+            html += data[i]["content"];
+            html += '</div>';
+            html += '<div class="news-list-info">';
+            html += '<span>'+formatDate(data[i]["createTime"])+'</span>';
+            html += '<span class="comment">99顶</span>';
+            html += '</div></div>';
+            html += '</a></li>';
+            $("#commentBoard").append(html);
+        }
+        var html="";
+        html += '<li class="mui-table-view-cell mui-media">';
+        html += '<a href="#">';
+        html += '<div class="comment-more-btn">';
+        html += '查看全部评论';
+        html += '</div>';
+        html += '</a></li>';
+        $("#commentBoard").append(html);
+    }
+
+    //更新推荐新闻的DOM
+    function updateRecommentList(data){
+        $("#recoBoard").html("");
+        for(var i=0;i<data.length;i++) {
+            var html = "";
+            html += '<li class="mui-table-view-cell mui-media" >';
+            html += '<a href="/prometheus/assets/customer/newsDetail.html?newsId='+data[i]["id"]+"&cateId="+data[i]["cateId"] +'" >';
+            if(data[i]["thumbnail"].length>10) {
+                html += '<img class="mui-media-object mui-pull-left thumb-nail" src="' + data[i]["thumbnail"] + '">';
+            }
+            html += '<div class="mui-media-body">';
+            html += '<div class="reco-news-title">';
+            html += data[i]["title"];
+            html += '</div>';
+            html += '<div class="news-list-info">';
+            html += '<span>'+data[i]["source"]+'</span>';
+            html += '<span class="comment">'+formatDate(data[i]["createTime"])+'</span>';
+            html += '</div>';
+            html += '</div></a></li>';
+            $("#recoBoard").append(html);
+        }
+    }
+
+
+     var btn = document.getElementById("backBtn");
+     btn.addEventListener("tap",function () {
+        window.history.back(-1);
+    });
+
+
+
+
+
+    //发表评论
+    document.getElementById("createComment").addEventListener("tap",function(){
+        var content=$("#commentContent").val();
+        $("#commentContent").val("");
+        if(content.length>0) {
+            $.ajax({
+                type: "POST",
+                url: "/prometheus/comment/create",
+                contentType: "application/json", //必须有
+                dataType: 'JSON',
+                data: JSON.stringify({
+                    'newsId': parseInt(newsId),
+                    'cateId': parseInt(cateId),
+                    'content': content,
+                    'reId': 0
+                }),
+                beforeSend: function (XMLHttpRequest) {
+                },
+                success: function (data, textStatus) {
+                    var errCode = data["errCode"];
+                    if (errCode == 0) {
+                        mui.toast("评论成功！");
+                        getComment(cateId,newsId);
+                    } else {
+                        mui.toast("评论失败，稍后重试…");
+                    }
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+
+                },
+                error: function () {//请求出错处理
+                }
+            });
+        }
+    });
+
+
+
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery模拟原生态App上拉刷新下拉加载效果代码 - 【科e互联】</title>
+    <meta name="viewport" content="width=device-width">
+    <!--标准mui.css-->
+    <link rel="stylesheet" href="../stylesheets/css/mui.min.css">
+    <!--App自定义的css-->
+    <link rel="stylesheet" type="text/css" href="../stylesheets/css/app.css"/>
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+        }
+        .preloader {
+            position: absolute;
+            left: 0;
+            top: -100px;
+            z-index: 0;
+            line-height: 100px;
+            height: 100px;
+            width: 100%;
+            opacity: 0;
+            font-size: 24px;
+            -webkit-transition: 300ms;
+            -moz-transition: 300ms;
+            -ms-transition: 300ms;
+            -o-transition: 300ms;
+            transition: 300ms;
+            background: rgba(0,0,0,0.1);
+        }
+        .preloader.visible {
+            top: 0;
+            opacity: 1;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<div class="preloader"> Loading... </div>
+<div class="swiper-container">
+    <div class="mui-table-view swiper-wrapper">
+            <!--<li class="mui-table-view-cell mui-media" >-->
+            <!--<a href="">-->
+            <!--<img class="mui-media-object mui-pull-left thumb-nail" src="">-->
+            <!--<div class="mui-media-body">-->
+              <!--<div class="news-list-title">标题标题标题标题标题</div>-->
+               <!--<div class="news-list-description">-->
+                   <!--合肥网互粉哦无法复合物ifnmfv发-->
+                   <!--阿三生生死死生生死死生生死死生生死死-->
+               <!--</div>-->
+                <!--<div class="news-list-info">-->
+                <!--<span>22333</span>-->
+                   <!--<span class="comment">1000评论</span>-->
+                    <!--</div>-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li class="mui-table-view-cell mui-media" >-->
+                <!--<a href="">-->
+                    <!--<img class="mui-media-object mui-pull-left thumb-nail" src="">-->
+                    <!--<div class="mui-media-body">-->
+                        <!--<div class="news-list-title">标题标题标题标题标题</div>-->
+                        <!--<div class="news-list-description">-->
+                            <!--合肥网互粉哦无法复合物ifnmfv发-->
+                            <!--阿三生生死死生生死死生生死死生生死死-->
+                        <!--</div>-->
+                        <!--<div class="news-list-info">-->
+                            <!--<span>22333</span>-->
+                            <!--<span class="comment">1000评论</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</a>-->
+            <!--</li>-->
+
+    </div>
+</div>
+<script src="../javascript/js/mui.min.js"></script>
+<script src="../javascript/js/jquery-2.2.3.min.js"></script>
+<script src="../javascript/js/idangerous.swiper.min.js"></script>
+<script src="../javascript/js/util.js"></script>
+<script>
+    var holdPosition = 0;
+    var mySwiper = new Swiper('.swiper-container',{
+        slidesPerView:'auto',
+        mode:'vertical',
+        watchActiveIndex: true,
+        onTouchStart: function() {
+            holdPosition = 0;
+        },
+        onResistanceBefore: function(s, pos){
+            holdPosition = pos;
+        },
+        onTouchEnd: function(){
+            console.log("---"+holdPosition);
+            if (holdPosition>100) {
+                mySwiper.setWrapperTranslate(0,100,0)
+                mySwiper.params.onlyExternal=true
+                $('.preloader').addClass('visible');
+                loadNewSlides();
+            }
+        }
+    })
+    var slideNumber = 0;
+    function loadNewSlides(){
+        setTimeout(function(){
+            //Prepend new slide
+            var colors = ['blue','red','green','orange','pink'];
+            var color = colors[Math.floor(Math.random()*colors.length)];
+            for(i=0;i<10;i++){
+//                mySwiper.prependSlide('<div class="title">www.internetke.com '+i+slideNumber+'</div>', 'swiper-slide '+color+'-slide');
+                var html='';
+            html+='<li class="mui-table-view-cell mui-media" >';
+              html+='      <a href="">';
+                    html+='<img class="mui-media-object mui-pull-left thumb-nail" src="">';
+                    html+='<div class="mui-media-body">';
+                    html+='<div class="news-list-title">标题标题标题标题标题</div>';
+                    html+='<div class="news-list-description">';
+                    html+='合肥网互粉哦无法复合物ifnmfv发阿三生生死死生生死死生生死死生生死死';
+                html+='</div>';
+                html+='<div class="news-list-info"> <span>22333</span> <span class="comment">1000评论</span>';
+                html+='</div> </div> </a> </li>';
+                mySwiper.prependSlide(html);
+
+//
+//
+//            $("#newsList").prepend(html);
+            }
+            //Release interactions and set wrapper
+            mySwiper.setWrapperTranslate(0,-300,0)
+            mySwiper.params.onlyExternal=false;
+            //Update active slide
+            mySwiper.updateActiveSlide(0)
+            //Hide loader
+            $('.preloader').removeClass('visible');
+        },1000)
+        slideNumber++;
+    }
+    loadNewSlides();
+</script>
+</body>
+</html>
